@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A free Storage Hunters: Open World companion tool. Organize charms and build separate gavel loadouts.">
+<title>Storage Hunters Loadout Lab</title>
+<style>
+:root{--bg:#0b1020;--panel:#141c31;--panel2:#1b2741;--line:#2b3a5c;--text:#eef3ff;--muted:#9caccb;--accent:#8b7cff;--accent2:#35d6c3;--danger:#ff6b7a;--gold:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0%,#20234a 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:28px 18px 20px;border-bottom:1px solid var(--line);background:#0b1020cc}
+.wrap{max-width:1120px;margin:auto;padding:0 16px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:23px}
+h1{font-size:clamp(24px,4vw,34px);margin:0;letter-spacing:-.8px}.sub{color:var(--muted);margin:5px 0 0}
+main{padding:24px 0 60px}.notice{border:1px solid #665eac;background:#211f43;padding:12px 14px;border-radius:12px;color:#dcd8ff;margin-bottom:18px}
+.layout{display:grid;grid-template-columns:1fr 1.1fr;gap:18px}.panel{background:linear-gradient(180deg,var(--panel),#11182a);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 10px}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}input,select{width:100%;background:#0b1325;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit;min-width:0}
+input:focus,select:focus{outline:2px solid #8b7cff88;border-color:var(--accent)}
+button{border:0;border-radius:9px;padding:10px 13px;background:var(--accent);color:white;font-weight:700;cursor:pointer;font:inherit}
+button:hover{filter:brightness(1.12)}button.secondary{background:#293654;color:var(--text);border:1px solid var(--line)}button.danger{background:#542b3b;color:#ffdce1;border:1px solid #8a4052}button.tiny{padding:6px 9px;font-size:12px}
+.row{display:flex;gap:9px;align-items:end}.row>*{flex:1}.row .fit{flex:0 0 auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin-bottom:11px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.tab{background:#202c47;border:1px solid var(--line);color:var(--muted)}.tab.active{background:#5147a3;border-color:#8b7cff;color:white}
+.list{display:grid;gap:9px;margin-top:12px}.item{background:#0d1629;border:1px solid var(--line);border-radius:11px;padding:11px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.item strong{display:block}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}.chip{font-size:11px;color:#c8d2ec;background:#253452;padding:3px 7px;border-radius:20px}
+.empty{border:1px dashed var(--line);border-radius:11px;padding:20px;text-align:center;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}.stat{background:#0d1629;border:1px solid var(--line);border-radius:11px;padding:11px}.stat b{font-size:20px;display:block;color:var(--accent2)}.stat span{font-size:11px;color:var(--muted)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.adbox{margin-top:20px;border:1px dashed #465577;border-radius:12px;padding:15px;text-align:center;color:var(--muted);font-size:12px}
+footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:12px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="wrap brand"><div class="logo">🔨</div><div><h1>Storage Hunters Loadout Lab</h1><p class="sub">Your personal charm inventory and four-gavel build planner.</p></div></div></header>
+<main class="wrap">
+<div class="notice"><strong>Unofficial community tool.</strong> This planner doesn't connect to Roblox or verify in-game stats. Enter the charm effects shown in your game.</div>
+<div class="layout">
+<section class="panel">
+<h2>① Charm inventory</h2>
+<p class="muted small">Add your charms once, then equip them independently on each gavel.</p>
+<div class="field"><label for="charmName">Charm name</label><input id="charmName" maxlength="50" placeholder="e.g. Void Star"></div>
+<div class="grid2">
+<div class="field"><label for="luck">Luck (%)</label><input id="luck" type="number" step="any" value="0"></div>
+<div class="field"><label for="bid">Bid zone (%)</label><input id="bid" type="number" step="any" value="0"></div>
+<div class="field"><label for="energy">Energy drink time (%)</label><input id="energy" type="number" step="any" value="0"></div>
+<div class="field"><label for="customLabel">Custom stat name</label><input id="customLabel" maxlength="30" placeholder="e.g. Auction speed"></div>
+<div class="field"><label for="customValue">Custom stat value</label><input id="customValue" type="number" step="any" value="0"></div>
+</div>
+<button id="addCharm">＋ Add charm</button>
+<div class="row" style="margin-top:22px"><h3 style="margin:0">Your charms</h3><span class="small" id="charmCount">0 charms</span></div>
+<div id="inventory" class="list"><div class="empty">No charms yet. Add your first one above.</div></div>
+</section>
+<section class="panel">
+<h2>② Gavel loadout builder</h2>
+<p class="muted small">Each gavel has its own independent setup. The same charm can be used on multiple gavels.</p>
+<div class="tabs" id="tabs">
+<button class="tab active" data-gavel="0">Gavel 1</button><button class="tab" data-gavel="1">Gavel 2</button><button class="tab" data-gavel="2">Gavel 3</button><button class="tab" data-gavel="3">Gavel 4</button>
+</div>
+<div class="field"><label for="gavelName">Loadout name</label><input id="gavelName" maxlength="40" placeholder="e.g. High luck"></div>
+<div class="field"><label for="equipCharm">Choose a charm to equip</label><div class="row"><select id="equipCharm"><option value="">Add charms to inventory first</option></select><button id="equipBtn" class="fit">Equip</button></div></div>
+<h3 style="margin-top:18px">Equipped charms</h3>
+<div id="equipped" class="list"><div class="empty">No charms equipped on this gavel.</div></div>
+<div class="stats">
+<div class="stat"><b id="totalLuck">0%</b><span>Total luck</span></div>
+<div class="stat"><b id="totalBid">0%</b><span>Bid zone</span></div>
+<div class="stat"><b id="totalEnergy">0%</b><span>Energy drink time</span></div>
+</div>
+<div id="customTotals" class="chips"></div>
+<div class="toolbar"><button class="secondary" id="renameSave">Save loadout name</button><button class="secondary" id="exportBtn">Export backup</button><button class="secondary" id="importBtn">Import backup</button><button class="danger" id="resetBtn">Reset all data</button><input id="importFile" type="file" accept="application/json" hidden></div>
+<p class="small" style="margin-top:12px">Your data is saved in this browser on this device. Export a backup before clearing browser data or switching devices.</p>
+</section>
+</div>
+<div class="adbox">Future sponsor / advertisement space — add an approved ad network only after your site is published and accepted.</div>
+</main>
+<footer><div class="wrap">Fan-made companion project. Not affiliated with, endorsed by, or sponsored by Roblox or the creators of Storage Hunters: Open World. Game names belong to their respective owners.</div></footer>
+<script>
+const KEY='sh-loadout-lab-v1';
+const blank=()=>({charms:[],gavels:Array.from({length:4},(_,i)=>({name:`Gavel ${i+1}`,equipped:[]}))});
+let data=load(),active=0;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||blank()}catch{return blank()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));}
+const $=id=>document.getElementById(id);
+const num=id=>Number($(id).value)||0;
+const fmt=n=>Number(n.toFixed(2)).toString();
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function charmById(id){return data.charms.find(c=>c.id===id)}
+function renderInventory(){
+ $('charmCount').textContent=`${data.charms.length} charm${data.charms.length===1?'':'s'}`;
+ $('inventory').innerHTML=data.charms.length?data.charms.map(c=>`<div class="item"><div><strong>${safe(c.name)}</strong><div class="chips">${c.luck?`<span class="chip">Luck ${fmt(c.luck)}%</span>`:''}${c.bid?`<span class="chip">Bid ${fmt(c.bid)}%</span>`:''}${c.energy?`<span class="chip">Energy ${fmt(c.energy)}%</span>`:''}${c.customLabel?`<span class="chip">${safe(c.customLabel)} ${fmt(c.customValue)}</span>`:''}</div></div><button class="danger tiny" data-delete="${c.id}">Delete</button></div>`).join(''):'<div class="empty">No charms yet. Add your first one above.</div>';
+ $('equipCharm').innerHTML=data.charms.length?'<option value="">Select a charm…</option>'+data.charms.map(c=>`<option value="${c.id}">${safe(c.name)}</option>`).join(''):'<option value="">Add charms to inventory first</option>';
+}
+function renderGavel(){
+ const g=data.gavels[active];$('gavelName').value=g.name;
+ document.querySelectorAll('.tab').forEach((b,i)=>{b.classList.toggle('active',i===active);b.textContent=gName(i)});
+ const equipped=g.equipped.map(charmById).filter(Boolean);
+ $('equipped').innerHTML=equipped.length?equipped.map(c=>`<div class="item"><div><strong>${safe(c.name)}</strong><div class="chips">${c.luck?`<span class="chip">Luck ${fmt(c.luck)}%</span>`:''}${c.bid?`<span class="chip">Bid ${fmt(c.bid)}%</span>`:''}${c.energy?`<span class="chip">Energy ${fmt(c.energy)}%</span>`:''}${c.customLabel?`<span class="chip">${safe(c.customLabel)} ${fmt(c.customValue)}</span>`:''}</div></div><button class="danger tiny" data-unequip="${c.id}">Unequip</button></div>`).join(''):'<div class="empty">No charms equipped on this gavel.</div>';
+ const sum=key=>equipped.reduce((a,c)=>a+(Number(c[key])||0),0);
+ $('totalLuck').textContent=fmt(sum('luck'))+'%';$('totalBid').textContent=fmt(sum('bid'))+'%';$('totalEnergy').textContent=fmt(sum('energy'))+'%';
+ const custom={};equipped.forEach(c=>{if(c.customLabel)custom[c.customLabel]=(custom[c.customLabel]||0)+(Number(c.customValue)||0)});
+ $('customTotals').innerHTML=Object.keys(custom).length?Object.entries(custom).map(([k,v])=>`<span class="chip">${safe(k)}: ${fmt(v)}</span>`).join(''):'<span class="small">No custom stats on this build.</span>';
+}
+function gName(i){return data.gavels[i].name||`Gavel ${i+1}`}
+function render(){renderInventory();renderGavel()}
+$('addCharm').onclick=()=>{
+ const name=$('charmName').value.trim();if(!name){alert('Enter a charm name first.');return}
+ data.charms.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),name,luck:num('luck'),bid:num('bid'),energy:num('energy'),customLabel:$('customLabel').value.trim(),customValue:num('customValue')});
+ ['charmName','customLabel'].forEach(id=>$(id).value='');['luck','bid','energy','customValue'].forEach(id=>$(id).value='0');save();render();
+};
+$('inventory').onclick=e=>{const b=e.target.closest('[data-delete]');if(!b)return;const id=b.dataset.delete;data.charms=data.charms.filter(c=>c.id!==id);data.gavels.forEach(g=>g.equipped=g.equipped.filter(x=>x!==id));save();render()};
+$('tabs').onclick=e=>{const b=e.target.closest('[data-gavel]');if(!b)return;data.gavels[active].name=$('gavelName').value.trim()||gName(active);active=Number(b.dataset.gavel);save();render()};
+$('equipBtn').onclick=()=>{const id=$('equipCharm').value;if(!id)return;const g=data.gavels[active];if(!g.equipped.includes(id))g.equipped.push(id);save();render()};
+$('equipped').onclick=e=>{const b=e.target.closest('[data-unequip]');if(!b)return;data.gavels[active].equipped=data.gavels[active].equipped.filter(id=>id!==b.dataset.unequip);save();render()};
+$('renameSave').onclick=()=>{data.gavels[active].name=$('gavelName').value.trim()||`Gavel ${active+1}`;save();render();};
+$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='storage-hunters-loadout-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const parsed=JSON.parse(await f.text());if(!Array.isArray(parsed.charms)||!Array.isArray(parsed.gavels)||parsed.gavels.length!==4)throw Error();data=parsed;save();render();alert('Backup imported.')}catch{alert('That backup file is not valid for this tool.')}e.target.value=''};
+$('resetBtn').onclick=()=>{if(confirm('Delete all charms and gavel loadouts saved in this browser? Export a backup first if needed.')){data=blank();active=0;save();render()}};
+$('gavelName').onchange=()=>{data.gavels[active].name=$('gavelName').value.trim()||`Gavel ${active+1}`;save();renderGavel()};
+render();
+</script>
+</body></html>
